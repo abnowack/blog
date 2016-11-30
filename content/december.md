@@ -1,4 +1,5 @@
-# December 16
+Title: December
+Date: December 24, 2016
 
 Not sure where the past few months went .. trying to get back into it.
 
