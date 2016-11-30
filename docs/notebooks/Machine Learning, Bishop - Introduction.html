@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+   <title>
+    Machine Learning, Bishop - Introduction
+   </title>
+   <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+                "tex2jax": { inlineMath: [['$', '$']] }
+                       });
+   </script>
+   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript">
+   </script>
+   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <style>
+     .hll {
+            background-color: #ffffcc
+        }
+
+        .c {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment */
+        .err {
+            border: 1px solid #FF0000
+        }
+
+        /* Error */
+        .k {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword */
+        .o {
+            color: #666666
+        }
+
+        /* Operator */
+        .ch {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Hashbang */
+        .cm {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Multiline */
+        .cp {
+            color: #BC7A00
+        }
+
+        /* Comment.Preproc */
+        .cpf {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.PreprocFile */
+        .c1 {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Single */
+        .cs {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Special */
+        .gd {
+            color: #A00000
+        }
+
+        /* Generic.Deleted */
+        .ge {
+            font-style: italic
+        }
+
+        /* Generic.Emph */
+        .gr {
+            color: #FF0000
+        }
+
+        /* Generic.Error */
+        .gh {
+            color: #000080;
+            font-weight: bold
+        }
+
+        /* Generic.Heading */
+        .gi {
+            color: #00A000
+        }
+
+        /* Generic.Inserted */
+        .go {
+            color: #888888
+        }
+
+        /* Generic.Output */
+        .gp {
+            color: #000080;
+            font-weight: bold
+        }
+
+        /* Generic.Prompt */
+        .gs {
+            font-weight: bold
+        }
+
+        /* Generic.Strong */
+        .gu {
+            color: #800080;
+            font-weight: bold
+        }
+
+        /* Generic.Subheading */
+        .gt {
+            color: #0044DD
+        }
+
+        /* Generic.Traceback */
+        .kc {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Constant */
+        .kd {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Declaration */
+        .kn {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Namespace */
+        .kp {
+            color: #008000
+        }
+
+        /* Keyword.Pseudo */
+        .kr {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Reserved */
+        .kt {
+            color: #B00040
+        }
+
+        /* Keyword.Type */
+        .m {
+            color: #666666
+        }
+
+        /* Literal.Number */
+        .s {
+            color: #BA2121
+        }
+
+        /* Literal.String */
+        .na {
+            color: #7D9029
+        }
+
+        /* Name.Attribute */
+        .nb {
+            color: #008000
+        }
+
+        /* Name.Builtin */
+        .nc {
+            color: #0000FF;
+            font-weight: bold
+        }
+
+        /* Name.Class */
+        .no {
+            color: #880000
+        }
+
+        /* Name.Constant */
+        .nd {
+            color: #AA22FF
+        }
+
+        /* Name.Decorator */
+        .ni {
+            color: #999999;
+            font-weight: bold
+        }
+
+        /* Name.Entity */
+        .ne {
+            color: #D2413A;
+            font-weight: bold
+        }
+
+        /* Name.Exception */
+        .nf {
+            color: #0000FF
+        }
+
+        /* Name.Function */
+        .nl {
+            color: #A0A000
+        }
+
+        /* Name.Label */
+        .nn {
+            color: #0000FF;
+            font-weight: bold
+        }
+
+        /* Name.Namespace */
+        .nt {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Name.Tag */
+        .nv {
+            color: #19177C
+        }
+
+        /* Name.Variable */
+        .ow {
+            color: #AA22FF;
+            font-weight: bold
+        }
+
+        /* Operator.Word */
+        .w {
+            color: #bbbbbb
+        }
+
+        /* Text.Whitespace */
+        .mb {
+            color: #666666
+        }
+
+        /* Literal.Number.Bin */
+        .mf {
+            color: #666666
+        }
+
+        /* Literal.Number.Float */
+        .mh {
+            color: #666666
+        }
+
+        /* Literal.Number.Hex */
+        .mi {
+            color: #666666
+        }
+
+        /* Literal.Number.Integer */
+        .mo {
+            color: #666666
+        }
+
+        /* Literal.Number.Oct */
+        .sb {
+            color: #BA2121
+        }
+
+        /* Literal.String.Backtick */
+        .sc {
+            color: #BA2121
+        }
+
+        /* Literal.String.Char */
+        .sd {
+            color: #BA2121;
+            font-style: italic
+        }
+
+        /* Literal.String.Doc */
+        .s2 {
+            color: #BA2121
+        }
+
+        /* Literal.String.Double */
+        .se {
+            color: #BB6622;
+            font-weight: bold
+        }
+
+        /* Literal.String.Escape */
+        .sh {
+            color: #BA2121
+        }
+
+        /* Literal.String.Heredoc */
+        .si {
+            color: #BB6688;
+            font-weight: bold
+        }
+
+        /* Literal.String.Interpol */
+        .sx {
+            color: #008000
+        }
+
+        /* Literal.String.Other */
+        .sr {
+            color: #BB6688
+        }
+
+        /* Literal.String.Regex */
+        .s1 {
+            color: #BA2121
+        }
+
+        /* Literal.String.Single */
+        .ss {
+            color: #19177C
+        }
+
+        /* Literal.String.Symbol */
+        .bp {
+            color: #008000
+        }
+
+        /* Name.Builtin.Pseudo */
+        .vc {
+            color: #19177C
+        }
+
+        /* Name.Variable.Class */
+        .vg {
+            color: #19177C
+        }
+
+        /* Name.Variable.Global */
+        .vi {
+            color: #19177C
+        }
+
+        /* Name.Variable.Instance */
+        .il {
+            color: #666666
+        }
+
+        /* Literal.Number.Integer.Long */
+
+        .task-list-item {
+            list-style-type: none;
+        }
+
+        .task-list-item input {
+            margin: 0 4px 0.25em -20px;
+            vertical-align: middle;
+        }
+
+        a { text-decoration: none; }
+
+        #post {
+            font-family: 'Roboto', sans-serif;
+            width: 800px;
+            margin: 1em auto;
+            color: #2e3436;
+        }
+
+        #header {
+            font-family: 'Roboto', sans-serif;
+            width: 800px;
+            margin: 1em auto;
+            padding-bottom: 1em;
+            color: #2e3436;
+            border-bottom: solid;
+            border-bottom-width: thin;
+        }
+
+        #footer {
+            font-family: 'Roboto', sans-serif;
+            width: 400px;
+            margin: 1em auto;
+            color: #2e3436;
+            text-align: center;
+            font-size: small;
+        }
+    </style>
+   </link>
+  </meta>
+ </head>
+ <body>
+  <div id="header">
+   <a href="/">
+    Index
+   </a>
+   - Aaron Nowack
+  </div>
+  <div id="post">
+   <h1 id="post-title">
+    Machine Learning, Bishop - Introduction
+   </h1>
+   <h3 id="post-date">
+   </h3>
+   <p>
+    Title:   IPython Jupyter Notebook
+   </p>
+   <div class="codehilite">
+    <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">inv</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="n">rc</span><span class="p">(</span><span class="s1">'figure'</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">'axes'</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="s1">'large'</span><span class="p">)</span>
+</pre>
+   </div>
+   <p>
+    This series of notebooks serves as a working reference based on Pattern Recognition and Machine Learning by Bishop
+   </p>
+   <h1>
+    Introduction
+   </h1>
+   <p>
+    <strong>
+     Adaptive Model
+    </strong>
+    -
+    <mathjax>
+     $y(x)$
+    </mathjax>
+    which accepts data
+    <mathjax>
+     $x$
+    </mathjax>
+    and generates an output vector
+    <mathjax>
+     $y$
+    </mathjax>
+   </p>
+   <p>
+    <strong>
+     Training Data
+    </strong>
+    - Set of data
+    <mathjax>
+     $\left\{x_1, x_2, \ldots, x_N\right\}$
+    </mathjax>
+    used to tune the parameters of an adaptive model
+   </p>
+   <p>
+    <strong>
+     Target Vector
+    </strong>
+    -
+    <mathjax>
+     $t$
+    </mathjax>
+    , identity category of data point, provided in training dataset or estimated by adaptive model
+   </p>
+   <p>
+    <strong>
+     Training Phase
+    </strong>
+    - An adaptive model is given a training data set, during which the model parameters are changed to minimize a cost function
+   </p>
+   <p>
+    <strong>
+     Generalization
+    </strong>
+    - Extending a trained adaptive model to new data
+   </p>
+   <p>
+    <strong>
+     Feature Extraction
+    </strong>
+    - Reducing and/or processing a dataset to accelerate computation, while perserving valuable information
+   </p>
+   <p>
+    <strong>
+     Classification
+    </strong>
+    - Method of assigning each input vector to a predetermined number of discrete categories
+   </p>
+   <p>
+    <strong>
+     Regression
+    </strong>
+    - Where desired output consists of one or more continuous variables
+   </p>
+   <p>
+    <strong>
+     Supervised Learning
+    </strong>
+    - An adaptive model is trained using a training data set containing the target vectors
+   </p>
+   <p>
+    <strong>
+     Unsupervised Learning
+    </strong>
+    - Not providing a target vector while training a model in order to discover new categories
+    <em>
+     <strong>
+      Clustering
+     </strong>
+     - Discover groups of similar data
+    </em>
+    <strong>
+     Density Estimation
+    </strong>
+    - Determine the generating distribution of a dataset
+*
+    <strong>
+     Visualization
+    </strong>
+    - Project a higher dimensional dataset into a lower dimensions
+   </p>
+   <p>
+    <strong>
+     Reinforcement Learning
+    </strong>
+    - Determining which actions to take in a given state in order to maximize an award (eg. gaming AI)
+*
+    <strong>
+     Credit Assignment
+    </strong>
+    - Determining and reinforcing actions maximize the award while discarding those which do not
+   </p>
+   <h1>
+    Polynomial Curve Fitting
+   </h1>
+   <p>
+    Given a set of training set of data
+    <mathjax>
+     $\mathbf{x} = \left\{x_1, x_2, \ldots, x_N\right\}^T, \mathbf{y} = \left\{y_1, y_2, \ldots, y_N\right\}^T$
+    </mathjax>
+    , seek to create an adaptive model
+    <mathjax>
+     $y(x)$
+    </mathjax>
+    consisting of a polynomial with coefficients
+    <mathjax>
+     $w$
+    </mathjax>
+    <mathjax>
+     $$y(x,\mathbf{w}) = w_0 + w_1 x + w_2 x^2 + \ldots + w_M x^m = \sum_{j=0}^{M}w_j x^j$$
+    </mathjax>
+    The coefficients
+    <mathjax>
+     $\mathbf{w}$
+    </mathjax>
+    can be determined by minimzing an error function. A common choice is sum of the squares of the difference of the output variable
+    <mathjax>
+     $$E(\mathbf{w}) = \frac{1}{2} \sum_{n=1}^{N} \left\{ y(x_n, \mathbf{w}) - t_n\right\}^2$$
+    </mathjax>
+   </p>
+   <p>
+    The unique solution to
+    <mathjax>
+     $w$
+    </mathjax>
+    can be found by taking the maximizing the derivative of the error function, simplified and expressed using vector notation as
+    <mathjax>
+     $$ X^T X \mathbf{w} = X^T t \\
+   \mathbf{w} = (X^T X)^{-1} X^T t
+$$
+    </mathjax>
+    Rewriting the error function and plugging in
+    <mathjax>
+     $w$
+    </mathjax>
+    <mathjax>
+     $$ E(w) = \frac{1}{2}(t - X w)^T (t - X w) = \frac{1}{2}(t - X (X^T X)^{-1} X^T t)^T (t - X (X^T X)^{-1} X^T t) \\ 
+X (X^T X)^{-1} X^T t = X X^{-1} (X^T)^{-1} X^T t = t \\
+E(w) = \frac{1}{2}(t - t)^T (t - t) = 0$$
+    </mathjax>
+    Thus
+    <mathjax>
+     $\mathbf{w} = (X^T X)^{-1} X^T t$
+    </mathjax>
+    minimizes
+    <mathjax>
+     $E(\mathbf{w})$
+    </mathjax>
+    , however the size
+    <mathjax>
+     $M$
+    </mathjax>
+    of
+    <mathjax>
+     $w$
+    </mathjax>
+    is still left unspecified. This can greatly affect the performance of the adaptive model during
+    <em>
+     generalization
+    </em>
+   </p>
+   <div class="codehilite">
+    <pre><span></span><span class="k">def</span> <span class="nf">distribution</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+<span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">M</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="p">)]))</span>
+    <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)),</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">t</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">wi</span> <span class="o">=</span> <span class="p">[</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x_</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">wi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">'M = {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">wi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">1.01</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre>
+   </div>
+   <p>
+    <img alt="png" src="output_8_0.png"/>
+   </p>
+   <p>
+    Now that the adaptive model has finished the training phase, we apply generalization by generating a much larger separate data set. To compare the performance between the training data and the new data the root-mean-square (RMS) error is used and defined as
+    <mathjax>
+     $$ E_{RMS} = \sqrt{2E(\mathbf{w^{*}})/N}$$
+    </mathjax>
+    where N is the size of the dataset
+   </p>
+   <div class="codehilite">
+    <pre><span></span><span class="n">e_rms_training</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">w_</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">),</span> <span class="mf">2.</span><span class="p">))</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">w_</span> <span class="ow">in</span> <span class="n">w</span><span class="p">])</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">x_</span><span class="p">,</span> <span class="n">t_</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">w_</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_</span><span class="p">)</span> <span class="k">for</span> <span class="n">w_</span> <span class="ow">in</span> <span class="n">w</span><span class="p">]</span>
+<span class="n">e_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x_</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">2.</span><span class="p">))</span><span class="o">/</span><span class="n">N</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))])</span>
+</pre>
+   </div>
+   <div class="codehilite">
+    <pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">e_rms_training</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Training'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">e_rms</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Test'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'$E_{RMS}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'M'</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre>
+   </div>
+   <p>
+    <img alt="png" src="output_11_0.png"/>
+   </p>
+   <p>
+    Thus we see that as
+    <mathjax>
+     $M$
+    </mathjax>
+    increases the
+    <mathjax>
+     $E_{RMS}$
+    </mathjax>
+    decreases for the training set, however it increases for the test data set. This is referred to as
+    <em>
+     overfitting
+    </em>
+    as increasing the complexity of the model tuned it to the statistical errors in the training dataset instead of the generating distribution. The reason for this can be illustrated by looking at
+    <mathjax>
+     $w$
+    </mathjax>
+    as
+    <mathjax>
+     $M$
+    </mathjax>
+    increases. With greater complexity the coefficients of
+    <mathjax>
+     $w$
+    </mathjax>
+    increase rapidly and tune to the random errors of the dataset.
+   </p>
+   <div class="codehilite">
+    <pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s1">'M = {}, w = '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="s1">'{:.2f}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">w_</span><span class="p">])</span>
+</pre>
+   </div>
+   <div class="codehilite">
+    <pre><span></span>M = 0, w = ['-0.03']
+M = 1, w = ['0.73', '-1.51']
+M = 2, w = ['0.59', '-0.61', '-0.90']
+M = 3, w = ['-0.30', '14.05', '-39.53', '25.75']
+M = 4, w = ['-0.40', '17.75', '-58.21', '55.72', '-14.98']
+M = 5, w = ['-0.37', '15.62', '-40.45', '5.50', '42.57', '-23.02']
+M = 6, w = ['-0.33', '5.48', '84.68', '-533.04', '1083.30', '-948.76', '308.58']
+M = 7, w = ['-0.35', '17.80', '-118.64', '672.67', '-2325.92', '4022.87', '-3299.36', '1030.84']
+M = 8, w = ['-0.34', '-52.79', '1304.82', '-10063.91', '38177.22', '-80300.77', '95078.21', '-59200.32', '15057.79']
+M = 9, w = ['-0.33', '-370.03', '8632.51', '-76067.04', '348250.70', '-925054.96', '1478310.36', '-1400848.18', '724886.45', '-157739.57']
+</pre>
+   </div>
+   <p>
+    One solution is to train on a much larger dataset. As a rule you should always have a large multiple (5 or 10) of data points compared to the number of parameters in your model. However for small sample sizes we are forced to limit our complexity which can be unsatisfying. We know that
+    <mathjax>
+     $\sin{x}$
+    </mathjax>
+    can be represented as an infinite power series, why restrict our selves to say cubic functions when we have 10 data points.
+   </p>
+   <p>
+    A solution is to apply
+    <em>
+     regularization
+    </em>
+    to discourage model parameters from settling on large values. This is done by introducing a penalty term in the error function,
+    <mathjax>
+     $$E(w) = \frac{1}{2} \sum_{n=1}^{N} \left\{ y(x_n, w) - t_n\right\}^2 + \frac{\lambda}{2}||w||^2$$
+    </mathjax>
+    where
+    <mathjax>
+     $||w||^2 = w^T w$
+    </mathjax>
+    . The coefficient
+    <mathjax>
+     $\lambda$
+    </mathjax>
+    governs how important the regularization term is compared with the sum-of-squares error. The new estimate with the regularization term is
+    <mathjax>
+     $$w = (X^T X + \lambda I)^{-1} X^T t$$
+    </mathjax>
+   </p>
+   <div class="codehilite">
+    <pre><span></span><span class="n">lamb</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">10.</span><span class="p">]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">lamb</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lamb</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="p">)]))</span>
+    <span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">m</span><span class="p">)),</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">t</span><span class="p">)</span>
+
+<span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x_</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">i</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">r'$\lambda = {}$'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lamb</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre>
+   </div>
+   <p>
+    <img alt="png" src="output_15_0.png"/>
+   </p>
+   <p>
+    Sometimes
+    <mathjax>
+     $w_0$
+    </mathjax>
+    is excluded from
+    <mathjax>
+     $||w||^2$
+    </mathjax>
+    to remove any dependency on the origin of the target variable.
+   </p>
+   <p>
+    Looking at the coefficients of
+    <mathjax>
+     $w$
+    </mathjax>
+    , we see that the magnitude of the coefficients have been reduced
+   </p>
+   <div class="codehilite">
+    <pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">w_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s1">'lambda = {}, w = '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lamb</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="s1">'{:.2f}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">w_</span><span class="p">])</span>
+</pre>
+   </div>
+   <div class="codehilite">
+    <pre><span></span>lambda = 0.0001, w = ['-0.33', '9.66', '-16.56', '-4.76', '-0.07', '4.96', '9.37', '9.20', '1.82', '-13.39']
+lambda = 10.0, w = ['0.03', '-0.08', '-0.09', '-0.07', '-0.06', '-0.04', '-0.03', '-0.02', '-0.01', '-0.00']
+</pre>
+   </div>
+   <div class="codehilite">
+    <pre><span></span><span class="n">lamb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">e_rms_training</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lamb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">e_rms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">lamb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">x_</span><span class="p">,</span> <span class="n">t_</span> <span class="o">=</span> <span class="n">distribution</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lamb</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">m</span><span class="p">)]))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">l</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">m</span><span class="p">)),</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="n">e_rms_training</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">w</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">),</span> <span class="mf">2.</span><span class="p">))</span><span class="o">/</span><span class="n">N</span><span class="p">)</span>
+    <span class="n">e_rms</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x_</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">w</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x_</span><span class="p">),</span> <span class="mf">2.</span><span class="p">))</span><span class="o">/</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lamb</span><span class="p">,</span> <span class="n">e_rms_training</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Training'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lamb</span><span class="p">,</span> <span class="n">e_rms</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'o'</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'red'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Test'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">r'$E_{RMS}$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">r'$\lambda$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">'log'</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre>
+   </div>
+   <p>
+    <img alt="png" src="output_18_0.png"/>
+   </p>
+   <p>
+    For the training dataset,
+    <mathjax>
+     $E_{RMS}$
+    </mathjax>
+    is lowest when the penalty term is removed. However for the test dataset it obtains a minimum near 1e-4. This approach comprises two datasets. First a training dataset to determine the coefficients of
+    <mathjax>
+     $w$
+    </mathjax>
+    , and a second holdout dataset to evauluate the model complexity (M or
+    <mathjax>
+     $\lambda$
+    </mathjax>
+    ). While this works there exist more sophisticated techniques which will not need to use up so much of the available training data.
+   </p>
+   <h1>
+    Probability Theory
+   </h1>
+   <div class="codehilite">
+    <pre><span></span>
+</pre>
+   </div>
+  </div>
+  <div id="footer">
+   Created using
+   <a href="https://github.com/abnowack/ButteredPost">
+    ButteredPost
+   </a>
+  </div>
+ </body>
+</html>

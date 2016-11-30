@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+   <title>
+    Notes on Lagrangian Mechanics
+   </title>
+   <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+                "tex2jax": { inlineMath: [['$', '$']] }
+                       });
+   </script>
+   <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript">
+   </script>
+   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <style>
+     .hll {
+            background-color: #ffffcc
+        }
+
+        .c {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment */
+        .err {
+            border: 1px solid #FF0000
+        }
+
+        /* Error */
+        .k {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword */
+        .o {
+            color: #666666
+        }
+
+        /* Operator */
+        .ch {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Hashbang */
+        .cm {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Multiline */
+        .cp {
+            color: #BC7A00
+        }
+
+        /* Comment.Preproc */
+        .cpf {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.PreprocFile */
+        .c1 {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Single */
+        .cs {
+            color: #408080;
+            font-style: italic
+        }
+
+        /* Comment.Special */
+        .gd {
+            color: #A00000
+        }
+
+        /* Generic.Deleted */
+        .ge {
+            font-style: italic
+        }
+
+        /* Generic.Emph */
+        .gr {
+            color: #FF0000
+        }
+
+        /* Generic.Error */
+        .gh {
+            color: #000080;
+            font-weight: bold
+        }
+
+        /* Generic.Heading */
+        .gi {
+            color: #00A000
+        }
+
+        /* Generic.Inserted */
+        .go {
+            color: #888888
+        }
+
+        /* Generic.Output */
+        .gp {
+            color: #000080;
+            font-weight: bold
+        }
+
+        /* Generic.Prompt */
+        .gs {
+            font-weight: bold
+        }
+
+        /* Generic.Strong */
+        .gu {
+            color: #800080;
+            font-weight: bold
+        }
+
+        /* Generic.Subheading */
+        .gt {
+            color: #0044DD
+        }
+
+        /* Generic.Traceback */
+        .kc {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Constant */
+        .kd {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Declaration */
+        .kn {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Namespace */
+        .kp {
+            color: #008000
+        }
+
+        /* Keyword.Pseudo */
+        .kr {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Keyword.Reserved */
+        .kt {
+            color: #B00040
+        }
+
+        /* Keyword.Type */
+        .m {
+            color: #666666
+        }
+
+        /* Literal.Number */
+        .s {
+            color: #BA2121
+        }
+
+        /* Literal.String */
+        .na {
+            color: #7D9029
+        }
+
+        /* Name.Attribute */
+        .nb {
+            color: #008000
+        }
+
+        /* Name.Builtin */
+        .nc {
+            color: #0000FF;
+            font-weight: bold
+        }
+
+        /* Name.Class */
+        .no {
+            color: #880000
+        }
+
+        /* Name.Constant */
+        .nd {
+            color: #AA22FF
+        }
+
+        /* Name.Decorator */
+        .ni {
+            color: #999999;
+            font-weight: bold
+        }
+
+        /* Name.Entity */
+        .ne {
+            color: #D2413A;
+            font-weight: bold
+        }
+
+        /* Name.Exception */
+        .nf {
+            color: #0000FF
+        }
+
+        /* Name.Function */
+        .nl {
+            color: #A0A000
+        }
+
+        /* Name.Label */
+        .nn {
+            color: #0000FF;
+            font-weight: bold
+        }
+
+        /* Name.Namespace */
+        .nt {
+            color: #008000;
+            font-weight: bold
+        }
+
+        /* Name.Tag */
+        .nv {
+            color: #19177C
+        }
+
+        /* Name.Variable */
+        .ow {
+            color: #AA22FF;
+            font-weight: bold
+        }
+
+        /* Operator.Word */
+        .w {
+            color: #bbbbbb
+        }
+
+        /* Text.Whitespace */
+        .mb {
+            color: #666666
+        }
+
+        /* Literal.Number.Bin */
+        .mf {
+            color: #666666
+        }
+
+        /* Literal.Number.Float */
+        .mh {
+            color: #666666
+        }
+
+        /* Literal.Number.Hex */
+        .mi {
+            color: #666666
+        }
+
+        /* Literal.Number.Integer */
+        .mo {
+            color: #666666
+        }
+
+        /* Literal.Number.Oct */
+        .sb {
+            color: #BA2121
+        }
+
+        /* Literal.String.Backtick */
+        .sc {
+            color: #BA2121
+        }
+
+        /* Literal.String.Char */
+        .sd {
+            color: #BA2121;
+            font-style: italic
+        }
+
+        /* Literal.String.Doc */
+        .s2 {
+            color: #BA2121
+        }
+
+        /* Literal.String.Double */
+        .se {
+            color: #BB6622;
+            font-weight: bold
+        }
+
+        /* Literal.String.Escape */
+        .sh {
+            color: #BA2121
+        }
+
+        /* Literal.String.Heredoc */
+        .si {
+            color: #BB6688;
+            font-weight: bold
+        }
+
+        /* Literal.String.Interpol */
+        .sx {
+            color: #008000
+        }
+
+        /* Literal.String.Other */
+        .sr {
+            color: #BB6688
+        }
+
+        /* Literal.String.Regex */
+        .s1 {
+            color: #BA2121
+        }
+
+        /* Literal.String.Single */
+        .ss {
+            color: #19177C
+        }
+
+        /* Literal.String.Symbol */
+        .bp {
+            color: #008000
+        }
+
+        /* Name.Builtin.Pseudo */
+        .vc {
+            color: #19177C
+        }
+
+        /* Name.Variable.Class */
+        .vg {
+            color: #19177C
+        }
+
+        /* Name.Variable.Global */
+        .vi {
+            color: #19177C
+        }
+
+        /* Name.Variable.Instance */
+        .il {
+            color: #666666
+        }
+
+        /* Literal.Number.Integer.Long */
+
+        .task-list-item {
+            list-style-type: none;
+        }
+
+        .task-list-item input {
+            margin: 0 4px 0.25em -20px;
+            vertical-align: middle;
+        }
+
+        a { text-decoration: none; }
+
+        #post {
+            font-family: 'Roboto', sans-serif;
+            width: 800px;
+            margin: 1em auto;
+            color: #2e3436;
+        }
+
+        #header {
+            font-family: 'Roboto', sans-serif;
+            width: 800px;
+            margin: 1em auto;
+            padding-bottom: 1em;
+            color: #2e3436;
+            border-bottom: solid;
+            border-bottom-width: thin;
+        }
+
+        #footer {
+            font-family: 'Roboto', sans-serif;
+            width: 400px;
+            margin: 1em auto;
+            color: #2e3436;
+            text-align: center;
+            font-size: small;
+        }
+    </style>
+   </link>
+  </meta>
+ </head>
+ <body>
+  <div id="header">
+   <a href="/">
+    Index
+   </a>
+   - Aaron Nowack
+  </div>
+  <div id="post">
+   <h1 id="post-title">
+    Notes on Lagrangian Mechanics
+   </h1>
+   <h3 id="post-date">
+    June 24, 2016
+   </h3>
+   <p>
+    These are notes based on Mechanics by Landau and Lifshitz. Going over the main points in each chapter and derivations which needed more detail
+   </p>
+   <h1>
+    Principle of Least Action
+   </h1>
+   <ul>
+    <li>
+     Generalized Coordinates : Any
+     <mathjax>
+      $s$
+     </mathjax>
+     quantities
+     <mathjax>
+      $q_1, q_2, ..., q_3$
+     </mathjax>
+     which define the position of a system with
+     <mathjax>
+      $s$
+     </mathjax>
+     degrees of freedom.
+    </li>
+    <li>
+     Generalized Velocities : The respective time derivatives
+     <mathjax>
+      $\dot{q}_1, \dot{q}_2, ..., \dot{q}_3$
+     </mathjax>
+     of the generalized coordinates
+    </li>
+   </ul>
+   <p>
+    If at an instant all generalized coordinates
+    <mathjax>
+     $q$
+    </mathjax>
+    and generalized velocities
+    <mathjax>
+     $\dot{q}$
+    </mathjax>
+    are given, the accelerations
+    <mathjax>
+     $\ddot{q}$
+    </mathjax>
+    at that instant are uniquely defined.
+   </p>
+   <p>
+    Mechanical motion is characterized by a function
+    <mathjax>
+     $L(q,\dot{q},t)$
+    </mathjax>
+    and a condition where at instants
+    <mathjax>
+     $t_1, t_2$
+    </mathjax>
+    in time the positions
+    <mathjax>
+     $q_1, q_2$
+    </mathjax>
+    change such that the integral
+    <mathjax>
+     $$
+S = \int^{t_2}_{t_1} L(q,\dot{q},t) dt
+$$
+    </mathjax>
+    takes an extremum value.
+    <mathjax>
+     $L(q,\dot{q},t)$
+    </mathjax>
+    is the
+    <em>
+     Lagrangian
+    </em>
+    , and
+    <mathjax>
+     $S$
+    </mathjax>
+    the
+    <em>
+     Action
+    </em>
+    .
+   </p>
+   <p>
+    To determine under what conditions S is minimized, start with
+    <mathjax>
+     $q$
+    </mathjax>
+    such that
+    <mathjax>
+     $S$
+    </mathjax>
+    over times
+    <mathjax>
+     $t_1$
+    </mathjax>
+    ,
+    <mathjax>
+     $t_2$
+    </mathjax>
+    is at a minimum. Then any change in
+    <mathjax>
+     $q$
+    </mathjax>
+    ,
+    <mathjax>
+     $q(t) \rightarrow q(t) + \delta q(t)$
+    </mathjax>
+    increases
+    <mathjax>
+     $S$
+    </mathjax>
+    . Positions at
+    <mathjax>
+     $q(t_1)$
+    </mathjax>
+    ,
+    <mathjax>
+     $q(t_2)$
+    </mathjax>
+    are already known so
+    <mathjax>
+     $\delta q(t_1) = \delta q(t_2) = 0$
+    </mathjax>
+    .
+   </p>
+   <p>
+    Then the change in
+    <mathjax>
+     $S$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\delta S = \int^{t_2}_{t_1} L(q + \delta q, \dot{q} + \delta \dot{q}, t) ~ dt - 
+           \int^{t_2}_{t_1} L(q, \dot{q}, t) ~ dt
+$$
+    </mathjax>
+   </p>
+   <p>
+    Expanding
+    <mathjax>
+     $L(q + \delta q, \dot{q} + \delta \dot{q}, t)$
+    </mathjax>
+    using the first order approximation
+    <mathjax>
+     $f(x_0 + \delta x) \approx f(x_0) + \delta x \frac{df}{dx} \Big \rvert_{x_0}$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+L(q + \delta q, \dot{q} + \delta \dot{q}, t) = L(q, \dot{q}, t) + \partial q \frac{\partial}{\partial q} L(q, \dot{q}, t) + \partial \dot{q} \frac{\partial}{\partial \dot{q}} L(q, \dot{q}, t) + \partial q ~ \partial \dot{q} \frac{\partial}{\partial q} \frac{\partial}{\partial \dot{q}} L(q, \dot{q}, t)
+$$
+    </mathjax>
+   </p>
+   <p>
+    Ignoring the second order term on the end, when
+    <mathjax>
+     $S$
+    </mathjax>
+    is minimized and
+    <mathjax>
+     $\delta S = 0$
+    </mathjax>
+    we have
+   </p>
+   <p>
+    <mathjax>
+     $$
+\int^{t_2}_{t_1} (\delta L - L) ~ dt = \int^{t_2}_{t_1} \left( \partial q ~ \frac{\partial L}{\partial q} + \partial \dot{q} ~ \frac{\partial L}{\partial \dot{q}} \right) dt = 0
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\delta \dot{q} = \frac{d}{dt} \delta q
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\int^{t_2}_{t_1} \left( \partial q ~ \frac{\partial L}{\partial q} + \frac{\partial L}{\partial \dot{q}} \frac{d}{dt} \delta q \right) dt = 0
+$$
+    </mathjax>
+   </p>
+   <p>
+    Now solving the second term inside the integral using integration by parts
+   </p>
+   <p>
+    <mathjax>
+     $$
+\int^{t_2}_{t_1} \frac{\partial L}{\partial \dot{q}} \frac{d}{dt} \delta q ~ dt = 
+\left( \frac{\partial L}{\partial \dot{q}} \delta q \right) \Bigg \rvert^{t_2}_{t_1} - \int^{t_2}_{t_1} \delta q \frac{d}{dt} \frac{\partial L}{\partial \dot{q}} ~ dt
+$$
+    </mathjax>
+   </p>
+   <p>
+    Since
+    <mathjax>
+     $\delta q(t_1) = \delta q(t_2) = 0$
+    </mathjax>
+    the first term vanishes. Substituting back, we have
+   </p>
+   <p>
+    <mathjax>
+     $$
+\delta S = \int^{t_2}_{t_1} \left( \frac{\partial L}{\partial q} - \frac{d}{dt} \frac{\partial L}{\partial \dot{q}} \right) \delta q ~ dt
+$$
+    </mathjax>
+   </p>
+   <p>
+    Since
+    <mathjax>
+     $\delta S = 0$
+    </mathjax>
+    for all
+    <mathjax>
+     $\delta q$
+    </mathjax>
+    we choose, the integrand itself must be zero
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_i} - \frac{\partial L}{\partial q_i} = 0 \qquad i = 1, 2, ..., s
+$$
+    </mathjax>
+   </p>
+   <p>
+    Which is referred to as the Lagrange's Equations of Motion, written above for
+    <mathjax>
+     $s$
+    </mathjax>
+    coordinates.
+   </p>
+   <p>
+    Lagrange's Equations describe the relationship between accelerations, velocities, and positions of a mechanical system. They yield
+    <mathjax>
+     $s$
+    </mathjax>
+    2nd order differential equations which require
+    <mathjax>
+     $2s$
+    </mathjax>
+    boundary conditions to solve for the equations of motion in time
+    <mathjax>
+     $q_i (t)$
+    </mathjax>
+   </p>
+   <h3>
+    Sidenote
+   </h3>
+   <p>
+    The Lagrangian is not defined uniquely, the time derivative of any function dependent on position and time can be added.
+   </p>
+   <p>
+    <mathjax>
+     $$
+L'(q, \dot{q}, t) = L(q, \dot{q}, t) + \frac{d}{dt} f(q, t)
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+S' = \int^{t_2}_{t_1} L(q, \dot{q}, t) ~ dt + \int^{t_2}_{t_1} \frac{df}{dt} dt = S + f(q(t_2), t_2) - f(q(t_1), t_1)
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\delta S' = \delta S + \delta \left( f(q(t_2), t_2) - f(q(t_1), t_1) \right)
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\delta f(q(t_2), t_2) = f(q(t_2), t_2) - f(q(t_2) + \delta q(t_2), t_2) = f(q(t_2), t_2) - f(q(t_2), t_2) - \delta q(t_2) \frac{\partial f}{\partial q} \Big \rvert_{t_2}
+$$
+    </mathjax>
+   </p>
+   <p>
+    Since
+    <mathjax>
+     $\delta q(t_2) = 0$
+    </mathjax>
+    by definition,
+    <mathjax>
+     $\delta f(q(t_2), t_2)$
+    </mathjax>
+    and subsequently
+    <mathjax>
+     $\delta f(q(t_1), t_1)$
+    </mathjax>
+    all vanish and
+    <mathjax>
+     $\delta S' = 0$
+    </mathjax>
+   </p>
+   <h1>
+    Inertial Reference Frame
+   </h1>
+   <p>
+    A frame of reference can always be chosen such that space is homogeneous and isotropic and time is also homogeneous. In this frame a free body which is at rest at an instant remains at rest. Such a frame is an
+    <em>
+     inertial frame of reference
+    </em>
+    .
+   </p>
+   <p>
+    The Lagrangian of a free particle in in an inertial frame of reference must then not explicitly contain the position vector
+    <mathjax>
+     $\vec{r}$
+    </mathjax>
+    or or the time
+    <mathjax>
+     $t$
+    </mathjax>
+    due to the homogeneity of space and time in an inertial frame. Thus the lagrangian of a free particle can only be a function of velocity
+    <mathjax>
+     $\vec{v}$
+    </mathjax>
+    . Additionally the isotropic property of space further restricts the Lagrangian to be a function of the magnitude of velocity only,
+    <mathjax>
+     $L = L(\vec{v} \cdot \vec{v})$
+    </mathjax>
+    .
+   </p>
+   <p>
+    Then
+    <mathjax>
+     $\partial L / \partial ~ \vec{r} = 0$
+    </mathjax>
+    and Lagrange's equation for a free particle becomes
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{d}{dt} \left( \frac{\partial L}{\partial ~ \vec{v}} \right) = 0
+$$
+    </mathjax>
+   </p>
+   <h1>
+    The Law of Inertia
+   </h1>
+   <p>
+    We apply Lagrange's equation onto
+    <mathjax>
+     $L(\vec{v} \cdot \vec{v})$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{\partial L}{\partial ~ \vec{v}} = 2 ~ \vec{v} ~ L'(\vec{v} \cdot \vec{v})
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{d}{dt} \left( \frac{\partial L}{\partial ~ \vec{v}} \right) = 
+2 ~ \vec{a} ~ L'(\vec{v} \cdot \vec{v}) + 4 ~ \vec{v} (\vec{a} \cdot \vec{v}) ~ L''(\vec{v} \cdot \vec{v}) = 0
+$$
+    </mathjax>
+   </p>
+   <p>
+    Taking the dot product of both sides with
+    <mathjax>
+     $\vec{v}$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+0 = 2 (\vec{a} \cdot \vec{v}) ( L'(\vec{v} \cdot \vec{v}) + 2 (\vec{v} \cdot \vec{v}) L''(\vec{v} \cdot \vec{v})
+$$
+    </mathjax>
+   </p>
+   <p>
+    In one solution
+    <mathjax>
+     $\vec{a} = 0$
+    </mathjax>
+    and thus
+    <mathjax>
+     $\vec{v}$
+    </mathjax>
+    is constant. The other solution arises from a differential equation
+   </p>
+   <p>
+    <mathjax>
+     $$
+L'(\vec{v} \cdot \vec{v}) + 2 (\vec{v} \cdot \vec{v}) L''(\vec{v} \cdot \vec{v}) = 0
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+L(\vec{v} \cdot \vec{v}) = \alpha \sqrt{\vec{v} \cdot \vec{v}} + \beta
+$$
+    </mathjax>
+   </p>
+   <p>
+    While this is differentiable with respect to
+    <mathjax>
+     $|v| = \sqrt{\vec{v} \cdot \vec{v}}$
+    </mathjax>
+    , it is not differentiable with respect to
+    <mathjax>
+     $\vec{v}$
+    </mathjax>
+    for
+    <mathjax>
+     $\vec{v} = \vec{0}$
+    </mathjax>
+    and
+    <mathjax>
+     $\frac{\partial L}{\partial ~ \vec{v}} = 0$
+    </mathjax>
+    is no longer valid. Thus this second solution is inconsistent and discarded.
+   </p>
+   <p>
+    Thus
+    <mathjax>
+     $$
+\vec{v} = \text{constant}
+$$
+    </mathjax>
+   </p>
+   <p>
+    In any inertial frame, free motion takes place with a velocity constant in magnitude and direction. This is the
+    <em>
+     law of inertia
+    </em>
+    .
+   </p>
+   <h1>
+    Absolute Reference Frames and Galilean Relativity
+   </h1>
+   <p>
+    Given another frame moving uniformly in a straight line relative to a given inertial frame free motion continues to take place with a constant velocity. This gives rise to an infinite number of reference frames in which the laws of mechanics are the same, constituting
+    <em>
+     Galileo's Relativity Principle
+    </em>
+    . The equivalence of these frames shows that there is no single absolute frame of reference.
+   </p>
+   <p>
+    Given two coordinates
+    <mathjax>
+     $\vec{r}$
+    </mathjax>
+    and
+    <mathjax>
+     $\vec{r}'$
+    </mathjax>
+    in two frames
+    <mathjax>
+     $K$
+    </mathjax>
+    and
+    <mathjax>
+     $K'$
+    </mathjax>
+    which the latter moves relative to the former with velocity
+    <mathjax>
+     $\vec{V}$
+    </mathjax>
+    , the coordinates are related by the
+    <em>
+     Galilean Transformation
+    </em>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\vec{r} = \vec{r}' + \vec{V} t
+$$
+    </mathjax>
+   </p>
+   <h1>
+    Free Particle Lagrangian
+   </h1>
+   <p>
+    Comparing two inertial frames related by an infinitesimal velocity
+    <mathjax>
+     $\vec{\epsilon}$
+    </mathjax>
+    , the form of the lagrangians in each frame should remain the same that is depending only on the square of velocity. Further they should differ from each other only by the total time derivative of a function of coordinates and time.
+   </p>
+   <p>
+    Given the relation between the inertial frames, the velocities are related through
+    <mathjax>
+     $\vec{v}' = \vec{v} + \vec{\epsilon}$
+    </mathjax>
+    . The lagrangians are related then by
+   </p>
+   <p>
+    <mathjax>
+     $$
+L' = L(\vec{v}' \cdot \vec{v}') = L( (\vec{v} + \vec{\epsilon}) \cdot (\vec{v} + \vec{\epsilon}) ) =
+L(\vec{v} \cdot \vec{v} + 2 \vec{v} \cdot \vec{\epsilon} + \vec{\epsilon} \cdot \vec{\epsilon} )
+$$
+    </mathjax>
+   </p>
+   <p>
+    Expanding to first order in terms of
+    <mathjax>
+     $v^2 = \vec{v} \cdot \vec{v}$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+L(v'^2) = L(v^2) + \frac{\partial L}{\partial v^2} 2 \vec{v} \cdot \vec{\epsilon}
+$$
+    </mathjax>
+   </p>
+   <p>
+    Since the second term already depends on
+    <mathjax>
+     $\vec{v}$
+    </mathjax>
+    linearly, to remain so (and thus a total time derivative of position),
+    <mathjax>
+     $\partial L / \partial v^2$
+    </mathjax>
+    must be independent of velocity. Thus the lagrangian is a linear function of
+    <mathjax>
+     $v^2$
+    </mathjax>
+    up to a constant factor. Written as
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = \tfrac{1}{2} m v^2
+$$
+    </mathjax>
+   </p>
+   <p>
+    By repeated transformations of infinitesimal relative velocities, the Lagrangian is also invariant for a finite relative velocity
+    <mathjax>
+     $V$
+    </mathjax>
+    between frames.
+   </p>
+   <p>
+    <mathjax>
+     $$
+L' = \tfrac{1}{2} m v'^2 = \tfrac{1}{2} m (\vec{v} + \vec{V})^2 = \tfrac{1}{2} m v^2 + m \vec{v} \cdot \vec{V} + \tfrac{1}{2} m V^2 = L + d (m \vec{r} \cdot \vec{V} + \tfrac{1}{2} m V^2 t) / dt
+$$
+    </mathjax>
+   </p>
+   <p>
+    Where the second term is a total time derivative of position and time and does not affect the action
+    <mathjax>
+     $S$
+    </mathjax>
+    .
+   </p>
+   <h3>
+    Sidenote
+   </h3>
+   <p>
+    An additional constant could be added, but it does not matter in terms of Lagrange's equations. Extremums don't change with constant shifts.
+   </p>
+   <h1>
+    Multiple Particle Lagrangian
+   </h1>
+   <p>
+    For a system of particle which only interact with each other (closed system), the interaction can be described as a function of the coordinates
+    <mathjax>
+     $-U(r_1, r_2, ...)$
+    </mathjax>
+    known as the
+    <em>
+     potential energy
+    </em>
+    .
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = \sum \tfrac{1}{2} m_a v_a^2 - U(r_1, r_2, ...)
+$$
+    </mathjax>
+   </p>
+   <p>
+    This lagrangian is isotropic in time as well, reversing time does not affect the lagrangian and therefore the equations of motion. Plugging this into the Euler-Lagrange equations we arrive at
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{d}{dt} \left( \frac{\partial}{\partial \dot{q}} \right) - \frac{\partial L}{\partial q} = 0
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{\partial L}{\partial v_a} = m_a v_a \qquad \frac{\partial L}{\partial r} = - \frac{\partial U}{\partial r_a}
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\frac{d}{dt} m_a v_a = \frac{\partial U}{\partial r_a}
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\text{Force} = m_a \frac{d v_a}{dt} = - \frac{\partial U}{\partial r_a}
+$$
+    </mathjax>
+   </p>
+   <p>
+    Where Force is expressed as in the classical Newton's Equation. The force, and thereby acceleration, only depend on the position of the system. These equations are identical up to a constant. The usual method is to define
+    <mathjax>
+     $U$
+    </mathjax>
+    such that as
+    <mathjax>
+     $r \rightarrow \infty$
+    </mathjax>
+    ,
+    <mathjax>
+     $U \rightarrow \infty$
+    </mathjax>
+    .
+   </p>
+   <p>
+    This lagrangian can be rewritten terms of generalized coordinates
+    <mathjax>
+     $q, \dot{q}$
+    </mathjax>
+    by expressing the cartesian coordintaes
+    <mathjax>
+     $r_a$
+    </mathjax>
+    ,
+    <mathjax>
+     $v_a$
+    </mathjax>
+    in terms of the generalized coordinates.
+   </p>
+   <p>
+    <mathjax>
+     $$
+r_a = f(q_1, q_2, ..., q_s) \qquad v_a = \sum_k \frac{\partial f_a}{\partial q_k} \dot{q}_k
+$$
+    </mathjax>
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = \tfrac{1}{2} \sum_k \frac{\partial f_a}{\partial q_k} \dot{q}_k \sum_i \frac{\partial f_a}{\partial q_i} \dot{q}_i - U(q) = \tfrac{1}{2} \sum_{i,k} a_{i,k} (q) \dot{q}_i \dot{q}_k - U(q)
+$$
+    </mathjax>
+   </p>
+   <p>
+    For two interacting Lagrangian systems
+    <mathjax>
+     $L_a$
+    </mathjax>
+    ,
+    <mathjax>
+     $L_b$
+    </mathjax>
+    the combined interaction is deonted as
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = T_a (q_a, \dot{q}_a) + T_b (q_b, \dot{q}_b) - U(q_a, q_b)
+$$
+    </mathjax>
+   </p>
+   <p>
+    Where
+    <mathjax>
+     $T_{a}$
+    </mathjax>
+    ,
+    <mathjax>
+     $T_{b}$
+    </mathjax>
+    are the kinetic energy terms. To solve for
+    <mathjax>
+     $L_a$
+    </mathjax>
+    , we can treat
+    <mathjax>
+     $q_b$
+    </mathjax>
+    as independent variables which depend on time,
+    <mathjax>
+     $q_b (t)$
+    </mathjax>
+    .
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = T_a (q_a, \dot{q}_a) + T_b (q_b (t), \dot{q}_b (t)) - U(q_a, q_b (t))
+$$
+    </mathjax>
+   </p>
+   <p>
+    And then changing perspective and considering
+    <mathjax>
+     $t$
+    </mathjax>
+    instead of
+    <mathjax>
+     $q_b (t)$
+    </mathjax>
+    , and
+    <mathjax>
+     $ T_b (q_b (t), \dot{q}_b (t))$
+    </mathjax>
+    can be ignored as a time derivative of a function that depends only on time, the lagrangian is now considered as
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = T_a (q_a, \dot{q}_a) - U(q_a, t)
+$$
+    </mathjax>
+   </p>
+   <p>
+    A free particle interacting with an external field is then given by
+   </p>
+   <p>
+    <mathjax>
+     $$
+L = \tfrac{1}{2} m v^2 - U(r, t)
+$$
+    </mathjax>
+   </p>
+   <p>
+    And the equations of motion yield
+   </p>
+   <p>
+    <mathjax>
+     $$
+m \dot{v} = - \frac{\partial U}{\partial r}
+$$
+    </mathjax>
+   </p>
+   <p>
+    If the force
+    <mathjax>
+     $F$
+    </mathjax>
+    is independent of
+    <mathjax>
+     $r$
+    </mathjax>
+    in the field, and thus the field is uniform,
+   </p>
+   <p>
+    <mathjax>
+     $$
+U(r, t) = -F \cdot r
+$$
+    </mathjax>
+   </p>
+  </div>
+  <div id="footer">
+   Created using
+   <a href="https://github.com/abnowack/ButteredPost">
+    ButteredPost
+   </a>
+  </div>
+ </body>
+</html>
