@@ -528,10 +528,131 @@ $$
    <p>
     <mathjax>
      $$
-G(m_1 + m_2) = G(m_1) + G(m_2) \quad G(\alpha m) = \alpha G(m)
+G(m_1 + m_2) = G(m_1) + G(m_2) \\
+G(\alpha m) = \alpha ~ G(m)
 $$
     </mathjax>
    </p>
+   <p>
+    For linear discrete inverse problems
+    <mathjax>
+     $G$
+    </mathjax>
+    can be represented as a matrix
+    <mathjax>
+     $$
+G(m) = G~m = d
+$$
+    </mathjax>
+   </p>
+   <p>
+    And in continuous problems as a kernel
+    <mathjax>
+     $g(x, \xi)$
+    </mathjax>
+    <mathjax>
+     $$
+G(m) = \int_b^a g(x, \xi) ~ m(\xi) ~ d\xi = d(x)
+$$
+    </mathjax>
+    The continuous representation where
+    <mathjax>
+     $m(x)$
+    </mathjax>
+    is unknown are called
+    <strong>
+     Fredholm intergral equations of the first kind (IFK)
+    </strong>
+    .
+   </p>
+   <p>
+    It can also be written as a convolution equation
+    <mathjax>
+     $$
+\int_{-\infty}^\infty g(x-\xi) ~ m(\xi) ~ d\xi = d(x)
+$$
+    </mathjax>
+    Where determining
+    <mathjax>
+     $d(x)$
+    </mathjax>
+    is the forward problem, and finding
+    <mathjax>
+     $m(x)$
+    </mathjax>
+    is the inverse problem.
+   </p>
+   <h2>
+    Why Inverse Problems Are Hard
+   </h2>
+   <ul>
+    <li>
+     <strong>
+      Existence
+     </strong>
+     : There may be no model
+     <mathjax>
+      $m$
+     </mathjax>
+     which fits the data
+     <mathjax>
+      $d$
+     </mathjax>
+     exactly. Either because the physics
+     <mathjax>
+      $G$
+     </mathjax>
+     are approximate or the data contains noise.
+    </li>
+    <li>
+     <strong>
+      Uniqueness
+     </strong>
+     : There may be multiple models
+     <mathjax>
+      $m$
+     </mathjax>
+     which satisfy
+     <mathjax>
+      $G(m) = d$
+     </mathjax>
+     , even an infinite number may exist. This occurs if
+     <mathjax>
+      $G$
+     </mathjax>
+     has a non-trivial nullspace. That is the existence of non-zero
+     <mathjax>
+      $m_0$
+     </mathjax>
+     such that
+     <mathjax>
+      $G(m_0) = 0$
+     </mathjax>
+     .
+    </li>
+    <li>
+     <strong>
+      Instability
+     </strong>
+     : Calculating
+     <mathjax>
+      $m$
+     </mathjax>
+     may be extremely sensitive to changes in
+     <mathjax>
+      $d$
+     </mathjax>
+     . This is referred to as an ill-posed or ill-conditioned problem. Additional constraints must be placed on
+     <mathjax>
+      $m$
+     </mathjax>
+     for a stable solution, a process known as
+     <strong>
+      regularization
+     </strong>
+     .
+    </li>
+   </ul>
   </div>
   <div id="footer">
    Created using

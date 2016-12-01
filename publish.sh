@@ -15,7 +15,7 @@ else
     esac
 fi
 
-if [ -z "$1" ]; then
+if [ $# -gt 0 ]; then
     exit;
 fi
 

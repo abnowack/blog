@@ -24,6 +24,29 @@ Linear Systems
 A common class of operators are __linear systems__ which obey superposition and scaling laws
 
 $$
-G(m_1 + m_2) = G(m_1) + G(m_2) \quad G(\alpha m) = \alpha G(m)
+G(m_1 + m_2) = G(m_1) + G(m_2) \\
+G(\alpha m) = \alpha ~ G(m)
 $$
 
+For linear discrete inverse problems $G$ can be represented as a matrix
+$$
+G(m) = G~m = d
+$$
+
+And in continuous problems as a kernel $g(x, \xi)$
+$$
+G(m) = \int_b^a g(x, \xi) ~ m(\xi) ~ d\xi = d(x)
+$$
+The continuous representation where $m(x)$ is unknown are called __Fredholm intergral equations of the first kind (IFK)__.
+
+It can also be written as a convolution equation
+$$
+\int_{-\infty}^\infty g(x-\xi) ~ m(\xi) ~ d\xi = d(x)
+$$
+Where determining $d(x)$ is the forward problem, and finding $m(x)$ is the inverse problem.
+
+Why Inverse Problems Are Hard
+-----------------------------
+* __Existence__: There may be no model $m$ which fits the data $d$ exactly. Either because the physics $G$ are approximate or the data contains noise.
+* __Uniqueness__: There may be multiple models $m$ which satisfy $G(m) = d$, even an infinite number may exist. This occurs if $G$ has a non-trivial nullspace. That is the existence of non-zero $m_0$ such that $G(m_0) = 0$. 
+* __Instability__: Calculating $m$ may be extremely sensitive to changes in $d$. This is referred to as an ill-posed or ill-conditioned problem. Additional constraints must be placed on $m$ for a stable solution, a process known as __regularization__.
