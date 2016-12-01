@@ -15,6 +15,10 @@ else
     esac
 fi
 
+if [ -z "$1" ]; then
+    exit;
+fi
+
 if [ -n "$(git status --porcelain)" ]; then
     git add --all
     git commit -m "adding files"
