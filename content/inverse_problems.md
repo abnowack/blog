@@ -10,4 +10,11 @@ $$
 G(m) = d
 $$
 
-Where $G$ is the relation between $m$ and $d$ based on physics.
+Where $G$ is an __operator__ and includes the relation between $m$ and $d$ based on physics. This relation where  $d$ is generated from $G$ and $m$ is the __forward problem__. It can be complicated if $d$ also includes a noise component $\eta$.
+
+$$
+d = G(m_\text{true}) + \eta = d_\text{true} + \eta
+$$
+
+Conversely the task of finding the model $m$ from a set of data $d$ is the __inverse problem__. This can either be deriving some physical quantities such as density or material properties, or coefficients in a functional representation of $m$. We task may either be a __discrete inverse problem__ or a __continuous inverse problem__ depending on whether the model and data are data vectors or functions of continuous variables.
+
