@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8">
    <title>
-    index
+    Notes on Linear Regression
    </title>
    <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -406,50 +406,224 @@
   </div>
   <div id="post">
    <h1 id="post-title">
+    Notes on Linear Regression
    </h1>
    <h3 id="post-date">
+    December 05, 2016
    </h3>
-   <ul>
-    <li>
-     <strong>
-      <a href="python_notes.html">
-       Notes on Porting Python2 to Python3
-      </a>
-     </strong>
-     - June 27, 2017
-    </li>
-    <li>
-     <strong>
-      <a href="linear_regression.html">
-       Notes on Linear Regression
-      </a>
-     </strong>
-     - December 05, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="inverse_problems.html">
-       Notes on Inverse Problems
-      </a>
-     </strong>
-     - December 01, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="mechanics.html">
-       Notes on Lagrangian Mechanics
-      </a>
-     </strong>
-     - June 24, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="notebooks/Machine Learning, Bishop - Introduction.html">
-       Machine Learning, Bishop - Introduction
-      </a>
-     </strong>
-    </li>
-   </ul>
+   <h2>
+    Overview
+   </h2>
+   <p>
+    For linear systems
+    <mathjax>
+     $G$
+    </mathjax>
+    is a matrix,
+    <mathjax>
+     $$
+G(m) = G_{m \times n} ~ m_{n \times 1} = d_{m \times 1}
+$$
+    </mathjax>
+   </p>
+   <p>
+    If
+    <mathjax>
+     $\text{rank}(G) = n$
+    </mathjax>
+    , then
+    <mathjax>
+     $G$
+    </mathjax>
+    has full column rank and will be assumed in general for linear regression. Usually
+    <mathjax>
+     $G ~ m \neq d$
+    </mathjax>
+    exactly because
+    <mathjax>
+     $d$
+    </mathjax>
+    will contain some noise. To overcome this instead of solving for
+    <mathjax>
+     $m$
+    </mathjax>
+    directly, we look for a minimization of a measure of the residual vector
+    <mathjax>
+     $r$
+    </mathjax>
+    <mathjax>
+     $$
+r = d - G~m
+$$
+    </mathjax>
+    A common measure to minimize
+    <mathjax>
+     $r$
+    </mathjax>
+    is the
+    <mathjax>
+     $L_2$
+    </mathjax>
+    norm, this is the
+    <strong>
+     least squares solution
+    </strong>
+    . It is statistically most likely if errors are normally distributed. To derive the
+    <mathjax>
+     $L_2$
+    </mathjax>
+    solution
+    <mathjax>
+     $m_{L_2}$
+    </mathjax>
+    , we need the projection vector
+    <mathjax>
+     $\text{proj}_y (x)$
+    </mathjax>
+    .
+    <mathjax>
+     $$
+||x-y||_2^2 = ||x||_2^2 + ||y||_2^2 - 2 ||x||_2 ||y||_2 \cos{\theta} \\
+(x-y)^T (x-y) = x^T x + y^T y - 2 ||x||_2 ||y||_2 \cos{\theta} \\
+x^T x - 2x^T y + y^T y = x^T x + y^T y - 2 ||x||_2 ||y||_2 \cos{\theta} \\
+-2x^T y = -2 ||x||_2 ||y||_2 \cos{\theta} \\
+x^T y = ||x||_2 ||y||_2 \cos{\theta}
+$$
+    </mathjax>
+   </p>
+   <p>
+    This is used to get the
+    <em>
+     projection
+    </em>
+    <mathjax>
+     $p$
+    </mathjax>
+    of
+    <mathjax>
+     $x$
+    </mathjax>
+    onto
+    <mathjax>
+     $y$
+    </mathjax>
+    as shown below.
+    <p style="text-align:center;">
+     <img height="200" src="images/vector_projection.PNG"/>
+    </p>
+   </p>
+   <p>
+    <mathjax>
+     $$
+\cos{\theta} = \frac{||p||_2}{||x||_2} \\
+x^T y = ||x||_2 ||y||_2 \frac{||p||_2}{||x||_2} \\
+||p||_2 = \frac{x^T y}{y^T y}
+$$
+    </mathjax>
+   </p>
+   <p>
+    Since
+    <mathjax>
+     $p$
+    </mathjax>
+    is in the direction of
+    <mathjax>
+     $y$
+    </mathjax>
+    , we can then define the projection vector
+    <mathjax>
+     $\text{prop}_y (x)$
+    </mathjax>
+    as
+   </p>
+   <p>
+    <mathjax>
+     $$
+\text{proj}_y (x) = ||p||_2 y = \frac{x^T y}{y^T y} y
+$$
+    </mathjax>
+   </p>
+   <p>
+    Now we want to find the best
+    <mathjax>
+     $m_\text{ls}$
+    </mathjax>
+    which minimizes
+    <mathjax>
+     $||d - G ~ m_\text{ls} ||_2^2$
+    </mathjax>
+    where
+    <mathjax>
+     $m_\text{ls}$
+    </mathjax>
+    is the least squares solution. The closest we can get to
+    <mathjax>
+     $d$
+    </mathjax>
+    will be the projection of
+    <mathjax>
+     $d$
+    </mathjax>
+    onto the range of
+    <mathjax>
+     $G$
+    </mathjax>
+    ,
+    <mathjax>
+     $R(G)$
+    </mathjax>
+    , and will be our least squares solution.
+    <mathjax>
+     $$
+G ~ m_\text{ls} = \text{proj}_{R(G)} (d)
+$$
+    </mathjax>
+    Since the component of
+    <mathjax>
+     $d$
+    </mathjax>
+    not in
+    <mathjax>
+     $R(G)$
+    </mathjax>
+    ,
+    <mathjax>
+     $G ~ m_\text{ls} - d$
+    </mathjax>
+    is perp to
+    <mathjax>
+     $R(G)$
+    </mathjax>
+    , each column of
+    <mathjax>
+     $G$
+    </mathjax>
+    is orthogonal to it
+    <mathjax>
+     $$
+G^T (G ~ m_\text{ls} - d) = 0 \\
+G^T G ~ m_\text{ls} - G^T d = 0 \\
+(G^T G) m_\text{ls} = G^T d
+$$
+    </mathjax>
+    If the columns of
+    <mathjax>
+     $G$
+    </mathjax>
+    are linearly independent
+    <mathjax>
+     $m_\text{ls}$
+    </mathjax>
+    has one unique solution and minimizes
+    <mathjax>
+     $||G ~ m - d||_2^2$
+    </mathjax>
+    <mathjax>
+     $$
+m_\text{ls} = (G^T G)^{-1} G^T d
+$$
+    </mathjax>
+   </p>
   </div>
   <div id="footer">
    Created using
