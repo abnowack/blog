@@ -80,7 +80,7 @@ Dropping the $1/2$ and treating it as a minimization problem by changing signs, 
 $$
 \text{min} \sum_{i=1}^k \frac{(d_i - (G~m)_i)^2}{\sigma_i^2}
 $$
-By scaling with $W = \text{diag}(1/sigma_1, 1/sigma_2, \dots , 1/sigma_m)$, the likelihood function can be expressed as the least squares solution
+By scaling with $W = \text{diag}(1/\sigma_1, 1/\sigma_2, \dots , 1/\sigma_m)$, the likelihood function can be expressed as the least squares solution
 $$
 G_W = W~G \quad d_W = W~d \\
 \sum_{i=1}^k \frac{(d_i - (G~m)_i)^2}{\sigma_i^2} = ||d_W - G_W ~ m_{L_2} ||_2^2

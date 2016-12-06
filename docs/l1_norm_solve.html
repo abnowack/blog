@@ -3,7 +3,7 @@
  <head>
   <meta charset="utf-8">
    <title>
-    index
+    L1 Regression
    </title>
    <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -406,58 +406,357 @@
   </div>
   <div id="post">
    <h1 id="post-title">
+    L1 Regression
    </h1>
    <h3 id="post-date">
+    December 06, 2016
    </h3>
-   <ul>
-    <li>
-     <strong>
-      <a href="l1_norm_solve.html">
-       L1 Regression
-      </a>
-     </strong>
-     - December 06, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="linear_regression.html">
-       Notes on Linear Regression
-      </a>
-     </strong>
-     - December 05, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="inverse_problems.html">
-       Notes on Inverse Problems
-      </a>
-     </strong>
-     - December 01, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="python_notes.html">
-       Notes on Porting Python2 to Python3
-      </a>
-     </strong>
-     - June 27, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="mechanics.html">
-       Notes on Lagrangian Mechanics
-      </a>
-     </strong>
-     - June 24, 2016
-    </li>
-    <li>
-     <strong>
-      <a href="notebooks/Machine Learning, Bishop - Introduction.html">
-       Machine Learning, Bishop - Introduction
-      </a>
-     </strong>
-    </li>
-   </ul>
+   <p>
+    <em>
+     Notes taken from Parameter Estimation and Inverse Problems (2013) by Aster et. al, Chapter 2
+    </em>
+    .
+   </p>
+   <p>
+    Least squares solutions, which minimize the
+    <mathjax>
+     $L_2$
+    </mathjax>
+    norm, are highly susceptible to observations which are inconsistent with the rest of the data set. These
+    <strong>
+     outliers
+    </strong>
+    can heavily alter the model estimation. While having outliers can indicate that the model is inaccurate, in real measurements often data is not distributed normally and mismeasurements may have also occurred.
+   </p>
+   <p>
+    If a measurement is 5 or more standard deviations from it's expected value, it has a one in one million chance of occurring. If a mismeasurement throws a single data point off by 5 standard deviations an
+    <mathjax>
+     $L_2$
+    </mathjax>
+    minimizing solution will compensate heavily for it.
+   </p>
+   <p>
+    An alternative is to minimize the
+    <mathjax>
+     $L_1$
+    </mathjax>
+    norm of the residual vector
+    <mathjax>
+     $$
+m_{L_1} = \text{min} \sum_{i=1}^m \frac{| d_i - (G~m)_i |}{\sigma_i} = ||d_w G_w ~ m||_1
+$$
+    </mathjax>
+   </p>
+   <p>
+    The
+    <mathjax>
+     $L_1$
+    </mathjax>
+    norm does not square the residuals which makes it more robust against outliers. The
+    <mathjax>
+     $m_{L_1}$
+    </mathjax>
+    solution also has a maximum likelihood interpretation; it is the maximum likelihood estimator for data distributed by a double-sided exponential distribution
+    <mathjax>
+     $$
+f(d_i | m) = \frac{1}{\sigma_i \sqrt{2}} e^{-\sqrt{2} |d_i - (G~m)_i| / \sigma_i}
+$$
+    </mathjax>
+    Even though the distribution is unusual, it remains useful to use if the presence of outliers do not change our assumption that the underlying model is correct.
+   </p>
+   <h2>
+    Average vs Median
+   </h2>
+   <p>
+    As a simple exercise on the
+    <mathjax>
+     $L_2$
+    </mathjax>
+    vs
+    <mathjax>
+     $L_1$
+    </mathjax>
+    norm consider the most basic model, estimating a single value given some measurements of that value. In the setup
+    <mathjax>
+     $G~m = d$
+    </mathjax>
+    ,
+    <mathjax>
+     $G$
+    </mathjax>
+    is a column vector of 1,
+    <mathjax>
+     $m$
+    </mathjax>
+    is the true value,
+    <mathjax>
+     $d$
+    </mathjax>
+    is a column vector of the measurements.
+   </p>
+   <p>
+    The
+    <mathjax>
+     $L_2$
+    </mathjax>
+    mimizing solution is found easily
+    <mathjax>
+     $$
+m_{L_2} = (G^T G)^{-1} G^T d = (\sum_{i=1}^m 1)^{-1} \sum_{i=1}^m d_i = m^{-1} \sum_{i=1}^m d_i
+$$
+    </mathjax>
+    which is simply the average of
+    <mathjax>
+     $d$
+    </mathjax>
+    .
+   </p>
+   <p>
+    For finding the
+    <mathjax>
+     $L_1$
+    </mathjax>
+    minimizing solution we need to minimize the following
+    <mathjax>
+     $$
+f(m) = ||d G ~ m||_1 = \sum_{i=1}^k |d G ~ m| 
+$$
+    </mathjax>
+    This can be done by solving
+    <mathjax>
+     $f'(m) = 0$
+    </mathjax>
+    is
+    <mathjax>
+     $f(m)$
+    </mathjax>
+    is differentiable, unfortunately it is not differentiable at each point where
+    <mathjax>
+     $(G~m)_i = d_i$
+    </mathjax>
+    . However since
+    <mathjax>
+     $f(m)$
+    </mathjax>
+    is convex a local minimum is also a global minimum. Instead try to minimize
+    <mathjax>
+     $f(m)$
+    </mathjax>
+    at every point where
+    <mathjax>
+     $f'(m)$
+    </mathjax>
+    is defined, and treat locations where it is undefined separately.
+   </p>
+   <p>
+    Where
+    <mathjax>
+     $f'(m)$
+    </mathjax>
+    is defined, it is
+    <mathjax>
+     $$
+f'(m) = \sum_{i=1}^m \text{sgn}~(d_i - m)
+$$
+    </mathjax>
+   </p>
+   <p>
+    Where
+    <mathjax>
+     $\text{sgn}$
+    </mathjax>
+    is the signum function, -1 if the argument is negative, +1 if it is positive, and 0 for an argument of 0. The function
+    <mathjax>
+     $f'(m)$
+    </mathjax>
+    is minimized when half of the data points are above
+    <mathjax>
+     $m$
+    </mathjax>
+    and half are below. In the case of an odd number of data points,
+    <mathjax>
+     $f'(m)$
+    </mathjax>
+    is zero when
+    <mathjax>
+     $m$
+    </mathjax>
+    is equal to the
+    <em>
+     median
+    </em>
+    . For an even number of points, any value of
+    <mathjax>
+     $m$
+    </mathjax>
+    between the two middle observations is a solution.
+   </p>
+   <h2>
+    Iteratively Reweighted Least Squares
+   </h2>
+   <p>
+    For finding
+    <mathjax>
+     $m_{L_1}$
+    </mathjax>
+    solutions in general, there is no analytic solution like there exists for
+    <mathjax>
+     $m_{L_2}$
+    </mathjax>
+    . However
+    <em>
+     iterative
+    </em>
+    solutions do exist which can find
+    <mathjax>
+     $m_{L_1}$
+    </mathjax>
+    easily and mostly straight forward.
+   </p>
+   <p>
+    We wish to minimize the
+    <mathjax>
+     $L1$
+    </mathjax>
+    norm of the residual vector
+    <mathjax>
+     $r = d - G~m$
+    </mathjax>
+    <mathjax>
+     $$
+f(m) = ||r||_1 = \sum_{i=1}^m |r_i|
+$$
+    </mathjax>
+   </p>
+   <p>
+    Again
+    <mathjax>
+     $f(m)$
+    </mathjax>
+    is not differentiable where any element of
+    <mathjax>
+     $r$
+    </mathjax>
+    is zero. However if we consider all other points, it can be differentiated
+    <mathjax>
+     $$
+\frac{\partial f(m)}{\partial m_k} = \sum_{i=1}{m} \frac{\partial |r_i|}{\partial m_k} = - \sum_{i=1}{m} G_{i,k} \text{sgn} (r_i) = - \sum_{i=1}^m G_{i,k} \frac{1}{|r_i|} r_i
+$$
+    </mathjax>
+   </p>
+   <p>
+    By writing the coeffecient between
+    <mathjax>
+     $G_{i,k}$
+    </mathjax>
+    and
+    <mathjax>
+     $r_i$
+    </mathjax>
+    as a diagonal matrix
+    <mathjax>
+     $R$
+    </mathjax>
+    with elements
+    <mathjax>
+     $$
+R_{i,i} = 1 / |r_i|
+$$
+    </mathjax>
+    the total derivative, the gradient, can be written in matrix form
+    <mathjax>
+     $$
+\nabla f(m) = -G^T R r = -G^T R (d - G m)
+$$
+    </mathjax>
+   </p>
+   <p>
+    Solving the minimization problem
+    <mathjax>
+     $\nabla f(m) = 0$
+    </mathjax>
+    ,
+    <mathjax>
+     $$
+G^T R (d - G m) = 0 \\
+G^T R G m = G^T R d
+$$
+    </mathjax>
+   </p>
+   <p>
+    Since
+    <mathjax>
+     $R$
+    </mathjax>
+    is a non-linear function of
+    <mathjax>
+     $m$
+    </mathjax>
+    , we cannot solve for
+    <mathjax>
+     $m$
+    </mathjax>
+    directly. Instead an iterative method is applied.
+   </p>
+   <p>
+    Start with the least squares solution
+    <mathjax>
+     $m^0 = m_{L_2}$
+    </mathjax>
+    and calculate the residual vector
+    <mathjax>
+     $r^0 = d - G m^0$
+    </mathjax>
+   </p>
+   <p>
+    Then solve for the new
+    <mathjax>
+     $m^1$
+    </mathjax>
+    estimate using
+    <mathjax>
+     $m^0$
+    </mathjax>
+    for the
+    <mathjax>
+     $R$
+    </mathjax>
+    matrix
+    <mathjax>
+     $$
+m^1 = (G^T R G)^{-1} G^T R d
+$$
+    </mathjax>
+    and calculate a new residual vector and repeat. If any element of
+    <mathjax>
+     $R$
+    </mathjax>
+    becomes zero the process fails. To overcome this, set a lower limit
+    <mathjax>
+     $\epsilon$
+    </mathjax>
+    such that if
+    <mathjax>
+     $|r_i| &lt; \epsilon$
+    </mathjax>
+    , then
+    <mathjax>
+     $R_{i,i} = 1 / \epsilon$
+    </mathjax>
+    .
+   </p>
+   <p>
+    The number of iterations can be controlled using a tolerance variable
+    <mathjax>
+     $\tau$
+    </mathjax>
+    and iteration terminates when
+    <mathjax>
+     $$
+\frac{|| m^{k+1} - m^k ||_2}{1 + ||m^{k+1}||_2} &lt; \tau
+$$
+    </mathjax>
+   </p>
   </div>
   <div id="footer">
    Created using
