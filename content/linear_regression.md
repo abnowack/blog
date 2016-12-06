@@ -50,3 +50,42 @@ If the columns of $G$ are linearly independent $m_\text{ls}$ has one unique solu
 $$
 m_\text{ls} = (G^T G)^{-1} G^T d
 $$
+
+Maximum Likelihood and Least Squares
+------------------------------------
+
+To account for errors in least squares solutions, a derivation based on joint probability distributions can be used. __Maximum Likelihood Estimation__ (MLE) considers each data $d$ observable, their statistical properties, a model $G$, and determines the most likely $m$.
+
+For each ith component of $d$, there exists a probability distribution for $d_i$, $f_i (d_i | m)$. For all components of $d$ the pdf is the joint distribution
+$$
+f(d| m) = f_1 (d_1 | m) ~ f_2 (d_2 | m) ~ \dots f_m (d_m | m) 
+$$
+This is also known as the likelihood $L$, $L(m | d) = f(d | m)$, considered a function of $m$ given $d$. MLE selects $m$ to maximize $L(m | d)$.
+
+In discrete linear inverse problems with independent normally distributed data errors, the MLE solution is equivalent to the Least Squares solution.
+
+For data observation $i$ with $\sigma_i$ standard deviation
+$$
+f_i (d_i | m) = \frac{1}{\sigma_i \sqrt{2 \pi}} e^{-1/2 (d_i - (G~m)_i)^2 / \sigma_i^2}
+$$
+Then $L(m | d) = f(d | m)$,
+$$
+L (m | d) = \frac{1}{(2 \pi)^(m/2) \prod_{i=1}^{m} \sigma_i} \prod_{i=1}^m e^{-1/2 (d_i - (G~m)_i)^2 / \sigma_i^2}
+$$
+The constant doesn't affect maximizing $L(m|d)$, and can be ignored. Additionally we can safely maximize the log of likelihood instead
+$$
+\text{max} \log \prod_{i=1}^m e^{-1/2 (d_i - (G~m)_i)^2 / \sigma_i^2} = \text{max} (-1/2 \sum_{i=1}^k (d_i - (G~m)_i)^2 / \sigma_i^2)
+$$
+Dropping the $1/2$ and treating it as a minimization problem by changing signs, to maximize the likelihood we look for an $m$ such that
+$$
+\text{min} \sum_{i=1}^k \frac{(d_i - (G~m)_i)^2}{\sigma_i^2}
+$$
+By scaling with $W = \text{diag}(1/sigma_1, 1/sigma_2, \dots , 1/sigma_m)$, the likelihood function can be expressed as the least squares solution
+$$
+G_W = W~G \quad d_W = W~d \\
+\sum_{i=1}^k \frac{(d_i - (G~m)_i)^2}{\sigma_i^2} = ||d_W - G_W ~ m_{L_2} ||_2^2
+$$
+Which as shown previously has the $L_2$ solution 
+$$
+m_{L_2} = (G_W^T G_W)^{-1} G_W^T d_W
+$$

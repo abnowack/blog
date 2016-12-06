@@ -624,6 +624,151 @@ m_\text{ls} = (G^T G)^{-1} G^T d
 $$
     </mathjax>
    </p>
+   <h2>
+    Maximum Likelihood and Least Squares
+   </h2>
+   <p>
+    To account for errors in least squares solutions, a derivation based on joint probability distributions can be used.
+    <strong>
+     Maximum Likelihood Estimation
+    </strong>
+    (MLE) considers each data
+    <mathjax>
+     $d$
+    </mathjax>
+    observable, their statistical properties, a model
+    <mathjax>
+     $G$
+    </mathjax>
+    , and determines the most likely
+    <mathjax>
+     $m$
+    </mathjax>
+    .
+   </p>
+   <p>
+    For each ith component of
+    <mathjax>
+     $d$
+    </mathjax>
+    , there exists a probability distribution for
+    <mathjax>
+     $d_i$
+    </mathjax>
+    ,
+    <mathjax>
+     $f_i (d_i | m)$
+    </mathjax>
+    . For all components of
+    <mathjax>
+     $d$
+    </mathjax>
+    the pdf is the joint distribution
+    <mathjax>
+     $$
+f(d| m) = f_1 (d_1 | m) ~ f_2 (d_2 | m) ~ \dots f_m (d_m | m) 
+$$
+    </mathjax>
+    This is also known as the likelihood
+    <mathjax>
+     $L$
+    </mathjax>
+    ,
+    <mathjax>
+     $L(m | d) = f(d | m)$
+    </mathjax>
+    , considered a function of
+    <mathjax>
+     $m$
+    </mathjax>
+    given
+    <mathjax>
+     $d$
+    </mathjax>
+    . MLE selects
+    <mathjax>
+     $m$
+    </mathjax>
+    to maximize
+    <mathjax>
+     $L(m | d)$
+    </mathjax>
+    .
+   </p>
+   <p>
+    In discrete linear inverse problems with independent normally distributed data errors, the MLE solution is equivalent to the Least Squares solution.
+   </p>
+   <p>
+    For data observation
+    <mathjax>
+     $i$
+    </mathjax>
+    with
+    <mathjax>
+     $\sigma_i$
+    </mathjax>
+    standard deviation
+    <mathjax>
+     $$
+f_i (d_i | m) = \frac{1}{\sigma_i \sqrt{2 \pi}} e^{-1/2 (d_i - (G~m)_i)^2 / \sigma_i^2}
+$$
+    </mathjax>
+    Then
+    <mathjax>
+     $L(m | d) = f(d | m)$
+    </mathjax>
+    ,
+    <mathjax>
+     $$
+L (m | d) = \frac{1}{(2 \pi)^(m/2) \prod_{i=1}^{m} \sigma_i} \prod_{i=1}^m e^{-1/2 (d_i - (G~m)_i)^2 / \sigma_i^2}
+$$
+    </mathjax>
+    The constant doesn't affect maximizing
+    <mathjax>
+     $L(m|d)$
+    </mathjax>
+    , and can be ignored. Additionally we can safely maximize the log of likelihood instead
+    <mathjax>
+     $$
+\text{max} \log \prod_{i=1}^m e^{-1/2 (d_i - (G~m)_i)^2 / \sigma_i^2} = \text{max} (-1/2 \sum_{i=1}^k (d_i - (G~m)_i)^2 / \sigma_i^2)
+$$
+    </mathjax>
+    Dropping the
+    <mathjax>
+     $1/2$
+    </mathjax>
+    and treating it as a minimization problem by changing signs, to maximize the likelihood we look for an
+    <mathjax>
+     $m$
+    </mathjax>
+    such that
+    <mathjax>
+     $$
+\text{min} \sum_{i=1}^k \frac{(d_i - (G~m)_i)^2}{\sigma_i^2}
+$$
+    </mathjax>
+    By scaling with
+    <mathjax>
+     $W = \text{diag}(1/sigma_1, 1/sigma_2, \dots , 1/sigma_m)$
+    </mathjax>
+    , the likelihood function can be expressed as the least squares solution
+    <mathjax>
+     $$
+G_W = W~G \quad d_W = W~d \\
+\sum_{i=1}^k \frac{(d_i - (G~m)_i)^2}{\sigma_i^2} = ||d_W - G_W ~ m_{L_2} ||_2^2
+$$
+    </mathjax>
+    Which as shown previously has the
+    <mathjax>
+     $L_2$
+    </mathjax>
+    solution
+    <mathjax>
+     $$
+m_{L_2} = (G_W^T G_W)^{-1} G_W^T d_W
+$$
+    </mathjax>
+   </p>
   </div>
   <div id="footer">
    Created using
